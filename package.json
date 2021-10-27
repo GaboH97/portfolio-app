@@ -1,0 +1,37 @@
+{
+  "name": "portfolio-app",
+  "version": "0.1.0",
+  "bin": {
+    "portfolio-app": "bin/portfolio-app.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "test": "jest",
+    "cdk": "cdk"
+  },
+  "devDependencies": {
+    "@aws-cdk/assert": "1.129.0",
+    "@types/jest": "^26.0.10",
+    "@types/node": "10.17.27",
+    "jest": "^26.4.2",
+    "ts-jest": "^26.2.0",
+    "aws-cdk": "1.129.0",
+    "ts-node": "^9.0.0",
+    "typescript": "~3.9.7"
+  },
+  "dependencies": {
+    "@aws-cdk/aws-apigateway": "^1.129.0",
+    "@aws-cdk/aws-dynamodb": "^1.129.0",
+    "@aws-cdk/aws-lambda": "^1.129.0",
+    "@aws-cdk/aws-lambda-nodejs": "^1.129.0",
+    "@aws-cdk/core": "1.129.0",
+    "@aws-cdk/custom-resources": "^1.129.0",
+    "@types/aws-serverless-express": "^3.3.5",
+    "aws-serverless-express": "^3.4.0",
+    "install": "^0.13.0",
+    "npm": "^8.1.1",
+    "source-map-support": "^0.5.16",
+    "twitter-lite": "^1.1.0"
+  }
+}

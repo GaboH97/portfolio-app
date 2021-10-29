@@ -3,7 +3,8 @@
         "target": "ES2018",
         "module": "commonjs",
         "lib": [
-            "es2018"
+            "es2018",
+            "DOM"
         ],
         "declaration": true,
         "strict": true,
@@ -19,12 +20,15 @@
         "inlineSourceMap": true,
         "inlineSources": true,
         "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
         "strictPropertyInitialization": false,
         "typeRoots": [
             "./node_modules/@types"
-        ]
+        ],
+        "outDir": "dist",
     },
     "exclude": [
-        "cdk.out"
+        "cdk.out",
+        "dist"
     ]
 }

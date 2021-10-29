@@ -1,4 +1,6 @@
-interface UserPortfolio {
+import { Tweet } from "../services/twitterAPIService";
+
+export interface UserPortfolio {
     id: string;
     firstName: string;
     lastName: string;
@@ -10,4 +12,9 @@ interface UserPortfolio {
     username?: string;
 }
 
-type EditableUserPortfolio = Partial<Omit<UserPortfolio, 'id'>>;
+export interface User {
+    details: UserPortfolio,
+    tweets?: Tweet[]
+}
+
+export type EditableUserPortfolio = Partial<Omit<UserPortfolio, 'id'>>;

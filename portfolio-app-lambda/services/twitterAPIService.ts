@@ -14,12 +14,11 @@ const MIN_TWEETS_FETCHED = 5;
 const twitterClient = new Twitter({
     extension: false,
     version: '2',
-    consumer_key: 'bjkvOXFUvrGpoKYIARaeJwokE',
-    consumer_secret: 'UmQwnJrg8r0OC6bHIgE0TOIyVX4yzv4IytWezJPIJgklvoopZb',
-    access_token_key: '342800084-03q75jVSZPN15o16tH4JvleigGRsGA7bqZPa6lCz',
-    access_token_secret: 'C6X0K8Zd06N1hZ5M4NkpnXLWQiHobBWZinKxStH7ilvXX',
-    bearer_token:
-        'AAAAAAAAAAAAAAAAAAAAAAEnFAEAAAAAMvBIw2zVFgkFaCTd7pEqCUF5KRU%3DnCNEPVhbLvDJZNVvfs4FksdDjuXKEXuDimdMP9nkGXQWM9Pjzr'
+    consumer_key: process.env.TWITTER_CONSUMER_KEY,
+    consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
+    access_token_key: process.env.TWITTER_ACCESS_TOKEN_KEY!,
+    access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET!,
+    bearer_token: process.env.TWITTER_BEARER_TOKEN
 });
 
 /**
@@ -32,7 +31,7 @@ export async function getTwitterIdByUsername(username: string): Promise<string> 
     console.log(`response`, response);
     if (response.data) return response.data.id;
     else throw new TwitterUserNotFoundError(username);
-    
+
 }
 
 /**

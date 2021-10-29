@@ -1,13 +1,14 @@
 import * as cdk from '@aws-cdk/core';
 import { NodejsFunction } from "@aws-cdk/aws-lambda-nodejs";
-import { Code, Function, LayerVersion, Runtime } from '@aws-cdk/aws-lambda';
+import { Runtime } from '@aws-cdk/aws-lambda';
 import { AwsCustomResource, AwsCustomResourcePolicy, PhysicalResourceId } from '@aws-cdk/custom-resources';
 import { LambdaRestApi } from '@aws-cdk/aws-apigateway';
-import { join, resolve } from 'path';
+import { join } from 'path';
 import { AttributeType, BillingMode, Table } from '@aws-cdk/aws-dynamodb';
+import { RemovalPolicy } from '@aws-cdk/core';
 
 
-interface UserPortfolio {
+interface UserPortfolioEntry {
   id: { S: string };
   firstName: { S: string };
   lastName: { S: string };
@@ -32,6 +33,7 @@ export class PortfolioAppStack extends cdk.Stack {
       },
       tableName: 'users',
       billingMode: BillingMode.PAY_PER_REQUEST,
+      removalPolicy: RemovalPolicy.DESTROY
     });
 
     const portfolioAppLambda = new NodejsFunction(this, 'portfolio-app-lambda', {
@@ -46,34 +48,15 @@ export class PortfolioAppStack extends cdk.Stack {
         "package-lock.json"
       ),
       environment:{
-        TABLE_NAME: usersTable.tableName
+        TABLE_NAME: usersTable.tableName,
+        TWITTER_ACCESS_TOKEN_KEY: process.env.TWITTER_ACCESS_TOKEN_KEY!,
+        TWITTER_ACCESS_TOKEN_SECRET: process.env.TWITTER_ACCESS_TOKEN_SECRET!,
+        TWITTER_CONSUMER_KEY: process.env.TWITTER_CONSUMER_KEY!,
+        TWITTER_CONSUMER_SECRET: process.env.TWITTER_CONSUMER_SECRET!,
+        TWITTER_BEARER_TOKEN: process.env.TWITTER_BEARER_TOKEN!
       },
       runtime: Runtime.NODEJS_14_X
     })
-
-    // // pack all external deps in layer
-    // const lambdaLayer = new LayerVersion(this, 'HandlerLayer', {
-    //   code: Code.fromAsset(resolve(__dirname, '../portfolio-app-lambda/node_modules')),
-    //   compatibleRuntimes:[Runtime.NODEJS_14_X],
-    //   description: 'Api Handler Dependencies',
-    // });
-
-
-    // const portfolioAppLambda = new Function(this,
-    //   "portfolio-app-lambda",
-    //   {
-    //     code: Code.fromAsset(resolve(__dirname, '../portfolio-app-lambda/dist'), {
-    //       exclude: ['node_modules'],
-    //     }),
-    //     handler: 'main.handler',
-    //     runtime: Runtime.NODEJS_14_X,
-    //     layers: [lambdaLayer],
-    //     environment: {
-    //       NODE_PATH: '$NODE_PATH:/opt',
-    //       tableName: usersTable.tableName,
-    //     },
-    //   }
-    // );
 
     new AwsCustomResource(this, 'initDBResource', {
       onUpdate: {
@@ -96,11 +79,12 @@ export class PortfolioAppStack extends cdk.Stack {
     });
   }
 
-  private generateItem = (): UserPortfolio => {
+  private generateItem = (): UserPortfolioEntry => {
     return {
       id: { S: '1' },
       firstName: { S: 'James' },
       username: { S: 'jamesdrodriguez' },
+      userId: {S:'280701704'},
       lastName: { S: 'Rodriguez' },
       description: { S: "James David Rodríguez Rubio (Cúcuta, Norte de Santander, Colombia, 12 de julio de 1991) es un futbolista colombiano nacionalizado español.1? Juega como centrocampista y su equipo actual es el Everton Football Club de la Premier League de Inglaterra" },
       profilePhoto: { S: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/James_Rodriguez_Training_2019-04-10_FC_Bayern_Muenchen-1.jpg/200px-James_Rodriguez_Training_2019-04-10_FC_Bayern_Muenchen-1.jpg" },

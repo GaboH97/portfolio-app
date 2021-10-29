@@ -30,6 +30,8 @@ This application infrastucture has 100% AWS cloud-based deployment, which is con
 `npm install -g typescript`
 * Clone Git Repository
 `git clone https://github.com/GaboH97/portfolio-app.git && cd portfolio-app`
+* Install NPM dependencies (in project root folder and lambda)
+`npm i`
 * Bootstrap CDK
 `cdk bootstrap aws://ACCOUNT-NUMBER/REGION`
 * Generate synthesized CloudFormation template

@@ -1,6 +1,7 @@
-import * as AWS from "aws-sdk";
 // AWS.config.update({ region: "us-east-1" })
 import { DocumentClient } from "aws-sdk/clients/dynamodb";
+import { EditableUserPortfolio, User, UserPortfolio } from "../types/userPortfolio";
+import { getLastTweetsByUser } from "./twitterAPIService";
 const db = new DocumentClient();
 
 /**
@@ -15,7 +16,6 @@ function generateUpdateExpression(fieldsToUpdate: Object) {
     let exp = {
         UpdateExpression: 'set'
     };
-
     Object.entries(fieldsToUpdate).forEach(([key, item]) => {
         exp.UpdateExpression += ` #${key} = :${key},`;
         ExpressionAttributeNames[`#${key}`] = key;
@@ -26,11 +26,27 @@ function generateUpdateExpression(fieldsToUpdate: Object) {
 }
 
 /**
- * 
+ * Gets info of a user with `userId` ID
  * @param userId Id of the user
+ * @returns A user Object
+ */
+export async function getUserInfo(userId: string): Promise<User> {
+    const user: User = null;
+    const userPortfolio = await getUserPortfolioInfo(userId);
+    user.details = userPortfolio;
+    if (userPortfolio.userId) {
+        const userTweets = await getLastTweetsByUser(userPortfolio.userId);
+        user.tweets = userTweets;
+    }
+    return user;
+}
+
+/**
+ * Gets the portfolio information of a user with a given `userId`
+ * @param {string} userId Id of the user
  * @returns 
  */
-export async function getUserPortfolioInfo(userId: string) {
+export async function getUserPortfolioInfo(userId: string): Promise<UserPortfolio | null> {
     const results = await db.get({
         TableName: process.env.TABLE_NAME,
         Key: {
@@ -50,7 +66,6 @@ export async function getUserPortfolioInfo(userId: string) {
  */
 export async function updateUserPortfolio(id: string, userPortfolio: EditableUserPortfolio) {
     const updateExpression = generateUpdateExpression(userPortfolio);
-
     const updateItemOutput = await db.update({
         TableName: process.env.TABLE_NAME,
         Key: { id },
@@ -59,7 +74,6 @@ export async function updateUserPortfolio(id: string, userPortfolio: EditableUse
         ExpressionAttributeValues: updateExpression.ExpressionAttributeValues,
         ReturnValues: "ALL_NEW"
     }).promise();
-
     console.log(`updateItemOutput.Attributes`, updateItemOutput.Attributes);
     return updateItemOutput.Attributes as UserPortfolio;
 }

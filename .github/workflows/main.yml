@@ -43,6 +43,7 @@ jobs:
       - name: Build Lambda
         working-directory: portfolio-app-lambda
         run: |
+          npm i
           npm run build
           
       - name: Deploy CDK

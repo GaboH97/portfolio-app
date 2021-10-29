@@ -5,8 +5,8 @@ name: CI
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
-  push:
-    branches: [ main ]
+  # push:
+  #  branches: [ main ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -40,8 +40,13 @@ jobs:
           npm install -g aws-cdk
           npm install
           
+      - name: Build Lambda
+        working-directory: portfolio-app-lambda
+        run: |
+          npm run build
+          
       - name: Deploy CDK
         run: | 
           pwd
           ls
-          cdk ls
+          cdk deploy PortfolioAppStack --require-approval never

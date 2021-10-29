@@ -5,7 +5,7 @@ import { AwsCustomResource, AwsCustomResourcePolicy, PhysicalResourceId } from '
 import { LambdaRestApi } from '@aws-cdk/aws-apigateway';
 import { join } from 'path';
 import { AttributeType, BillingMode, Table } from '@aws-cdk/aws-dynamodb';
-import { RemovalPolicy } from '@aws-cdk/core';
+import { Duration, RemovalPolicy } from '@aws-cdk/core';
 
 
 interface UserPortfolioEntry {
@@ -55,7 +55,8 @@ export class PortfolioAppStack extends cdk.Stack {
         TWITTER_CONSUMER_SECRET: process.env.TWITTER_CONSUMER_SECRET!,
         TWITTER_BEARER_TOKEN: process.env.TWITTER_BEARER_TOKEN!
       },
-      runtime: Runtime.NODEJS_14_X
+      runtime: Runtime.NODEJS_14_X,
+      timeout:Duration.seconds(10)
     })
 
     new AwsCustomResource(this, 'initDBResource', {

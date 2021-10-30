@@ -46,6 +46,7 @@ export async function getUserInfo(userId: string): Promise<User| null> {
     
         return user;
     } catch (error) {
+        console.log(`error`, error);
         return null;
     }
    

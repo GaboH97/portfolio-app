@@ -30,7 +30,7 @@ function generateUpdateExpression(fieldsToUpdate: Object) {
  * @param userId Id of the user
  * @returns A user Object
  */
-export async function getUserInfo(userId: string): Promise<User| Error> {
+export async function getUserInfo(userId: string): Promise<User| null> {
     try {
         const user: User = null;
         const userPortfolio = await getUserPortfolioInfo(userId);
@@ -46,7 +46,7 @@ export async function getUserInfo(userId: string): Promise<User| Error> {
     
         return user;
     } catch (error) {
-        return error;
+        return null;
     }
    
 }

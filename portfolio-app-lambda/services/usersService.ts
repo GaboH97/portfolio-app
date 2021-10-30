@@ -33,6 +33,7 @@ function generateUpdateExpression(fieldsToUpdate: Object) {
 export async function getUserInfo(userId: string): Promise<User> {
     const user: User = null;
     const userPortfolio = await getUserPortfolioInfo(userId);
+    console.log(`userPortfolio`, userPortfolio);
     user.details = userPortfolio;
     if (userPortfolio.userId) {
         console.log(`entered here `);
@@ -40,6 +41,8 @@ export async function getUserInfo(userId: string): Promise<User> {
         console.log(`userTweets`, userTweets);
         user.tweets = userTweets;
     }
+    console.log("print here");
+
     return user;
 }
 

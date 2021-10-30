@@ -30,26 +30,17 @@ function generateUpdateExpression(fieldsToUpdate: Object) {
  * @param userId Id of the user
  * @returns A user Object
  */
-export async function getUserInfo(userId: string): Promise<User| null> {
-    try {
-        const user: User = null;
-        const userPortfolio = await getUserPortfolioInfo(userId);
-        console.log(`userPortfolio`, userPortfolio);
-        user.details = userPortfolio;
-        if (userPortfolio.userId) {
-            console.log(`entered here `);
-            const userTweets = await getLastTweetsByUser(userPortfolio.userId);
-            console.log(`userTweets`, userTweets);
-            user.tweets = userTweets;
-        }
-        console.log("print here");
-    
-        return user;
-    } catch (error) {
-        console.log(`error`, error);
-        return null;
+export async function getUserInfo(userId: string): Promise<User | null> {
+    let user: User;
+    const userPortfolio = await getUserPortfolioInfo(userId);
+    user.details = userPortfolio;
+    if (userPortfolio.userId) {
+        console.log(`entered here `);
+        const userTweets = await getLastTweetsByUser(userPortfolio.userId);
+        console.log(`userTweets`, userTweets);
+        user.tweets = userTweets;
     }
-   
+    return user;
 }
 
 /**

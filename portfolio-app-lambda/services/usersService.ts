@@ -1,4 +1,5 @@
-// AWS.config.update({ region: "us-east-1" })
+import * as AWS from 'aws-sdk';
+AWS.config.update({ region: "us-east-1" })
 import { DocumentClient } from "aws-sdk/clients/dynamodb";
 import { EditableUserPortfolio, User, UserPortfolio } from "../types/userPortfolio";
 import { getLastTweetsByUser } from "./twitterAPIService";
@@ -31,21 +32,14 @@ function generateUpdateExpression(fieldsToUpdate: Object) {
  * @returns A user Object
  */
 export async function getUserInfo(userId: string): Promise<User | null> {
-    try {
-        let user: User;
-        const userPortfolio = await getUserPortfolioInfo(userId);
-        user.details = userPortfolio;
-        if (userPortfolio.userId) {
-            console.log(`entered here `);
-            const userTweets = await getLastTweetsByUser(userPortfolio.userId);
-            console.log(`userTweets`, userTweets);
-            user.tweets = userTweets;
-        }
-        return user;
-    } catch (error) {
-        return null;
+    let user: User = {};
+    const userPortfolio = await getUserPortfolioInfo(userId);
+    user.details = userPortfolio;
+    if (userPortfolio.userId) {
+        const userTweets = await getLastTweetsByUser(userPortfolio.userId);
+        user.tweets = userTweets;
     }
-
+    return user;
 }
 
 /**
@@ -55,7 +49,8 @@ export async function getUserInfo(userId: string): Promise<User | null> {
  */
 export async function getUserPortfolioInfo(userId: string): Promise<UserPortfolio | null> {
     const results = await db.get({
-        TableName: process.env.TABLE_NAME,
+        // TableName: process.env.TABLE_NAME,
+        TableName: "users",
         Key: {
             id: userId
         }

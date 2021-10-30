@@ -13,7 +13,7 @@ export interface UserPortfolio {
 }
 
 export interface User {
-    details: UserPortfolio,
+    details?: UserPortfolio,
     tweets?: Tweet[]
 }
 

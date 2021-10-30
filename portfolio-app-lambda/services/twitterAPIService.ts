@@ -41,7 +41,6 @@ export async function getTwitterIdByUsername(username: string): Promise<string> 
  * @returns the list of tweets
  */
 export async function getLastTweetsByUser(userId: string, tweetCount: number = MIN_TWEETS_FETCHED): Promise<Tweet[]> {
-    console.log(`tweetCount`, tweetCount);
     const response = await twitterClient.get(`users/${userId}/tweets`, { max_results: tweetCount });
     console.log(`response`, response);
     console.log(`response.data`, response.data);

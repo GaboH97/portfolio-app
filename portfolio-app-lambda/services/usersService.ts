@@ -31,16 +31,21 @@ function generateUpdateExpression(fieldsToUpdate: Object) {
  * @returns A user Object
  */
 export async function getUserInfo(userId: string): Promise<User | null> {
-    let user: User;
-    const userPortfolio = await getUserPortfolioInfo(userId);
-    user.details = userPortfolio;
-    if (userPortfolio.userId) {
-        console.log(`entered here `);
-        const userTweets = await getLastTweetsByUser(userPortfolio.userId);
-        console.log(`userTweets`, userTweets);
-        user.tweets = userTweets;
+    try {
+        let user: User;
+        const userPortfolio = await getUserPortfolioInfo(userId);
+        user.details = userPortfolio;
+        if (userPortfolio.userId) {
+            console.log(`entered here `);
+            const userTweets = await getLastTweetsByUser(userPortfolio.userId);
+            console.log(`userTweets`, userTweets);
+            user.tweets = userTweets;
+        }
+        return user;
+    } catch (error) {
+        return null;
     }
-    return user;
+
 }
 
 /**

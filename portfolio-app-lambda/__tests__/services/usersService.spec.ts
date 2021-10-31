@@ -1,7 +1,7 @@
 import { mocked } from 'ts-jest/utils';
 import { DocumentClient } from "../../__mocks__/aws-sdk/clients/dynamodb";
 import * as UsersService from "../../services/usersService";
-import { EditableUserPortfolio } from '../../types/UserPortfolio';
+import { EditableUserPortfolio } from '../../types/userPortfolio';
 
 const mockDynamoDB = new DocumentClient();
 

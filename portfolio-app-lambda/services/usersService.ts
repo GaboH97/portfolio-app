@@ -1,7 +1,7 @@
 import { DocumentClient } from "aws-sdk/clients/dynamodb";
 import UserNotFoundError from '../errors/userNotFoundError';
-import { User } from "../types/User";
-import { EditableUserPortfolio, UserPortfolio } from "../types/UserPortfolio";
+import { User } from "../types/user";
+import { EditableUserPortfolio, UserPortfolio } from "../types/userPortfolio";
 import { getLastTweetsByUser } from "./twitterService";
 const db = new DocumentClient();
 

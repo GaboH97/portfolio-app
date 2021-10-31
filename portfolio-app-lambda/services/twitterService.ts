@@ -1,5 +1,5 @@
 import Twitter from "twitter-lite";
-import { Tweet } from "../types/Tweet";
+import { Tweet } from "../types/tweet";
 
 export const DEFAULT_TWEETS_FETCHED = 5;
 

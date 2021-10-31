@@ -1,5 +1,5 @@
-import { Tweet } from "./Tweet";
-import { UserPortfolio } from "./UserPortfolio";
+import { Tweet } from "./tweet";
+import { UserPortfolio } from "./userPortfolio";
 
 /**
  * Interface for User

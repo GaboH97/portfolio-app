@@ -1,7 +1,7 @@
 import { mocked } from 'ts-jest/utils';
 import { DocumentClient } from "../../__mocks__/aws-sdk/clients/dynamodb";
 import * as UsersService from "../../services/usersService";
-import { EditableUserPortfolio } from "../../types";
+import { EditableUserPortfolio } from '../../types/UserPortfolio';
 
 const mockDynamoDB = new DocumentClient();
 
@@ -69,6 +69,25 @@ describe("User Service Test Suite", () => {
                     }
                 };
 
+
+                mockDynamoDB.get.mockImplementationOnce(() => {
+                    return {
+                        promise: jest.fn().mockResolvedValueOnce({
+                            Item: {
+                                id: { S: "1" },
+                                description: { S: "Adele Laurie Blue Adkins (Londres, 5 de mayo de 1988), conocida simplemente como Adele, es una cantante, compositora y multinstrumentista británica.3? Desde muy joven mostró su interés por la música y en 2006 egresó de la BRIT School de Artes Escénicas y" },
+                                profilePhoto: { S: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Adele_2016.jpg/1280px-Adele_2016.jpg" },
+                                username: { S: "Adele" },
+                                title: { S: "Adele" },
+                                userId: { S: "184910040" },
+                                experienceSummary: { S: "Not specified" },
+                                lastName: { S: "Blue " },
+                                firstName: { S: "Adele" }
+                            }
+                        })
+                    }
+                });
+
                 await UsersService.getUserPortfolioInfo(userId);
                 expect(mockDynamoDB.get).toHaveBeenCalledWith(expectedParams);
             });
@@ -103,6 +122,24 @@ describe("User Service Test Suite", () => {
                     UpdateExpression: "set #firstName = :firstName, #lastName = :lastName, #description = :description",
                     ReturnValues: "ALL_NEW"
                 };
+
+                mockDynamoDB.get.mockImplementationOnce(() => {
+                    return {
+                        promise: jest.fn().mockResolvedValueOnce({
+                            Item: {
+                                id: { S: "1" },
+                                description: { S: "Adele Laurie Blue Adkins (Londres, 5 de mayo de 1988), conocida simplemente como Adele, es una cantante, compositora y multinstrumentista británica.3? Desde muy joven mostró su interés por la música y en 2006 egresó de la BRIT School de Artes Escénicas y" },
+                                profilePhoto: { S: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Adele_2016.jpg/1280px-Adele_2016.jpg" },
+                                username: { S: "Adele" },
+                                title: { S: "Adele" },
+                                userId: { S: "184910040" },
+                                experienceSummary: { S: "Not specified" },
+                                lastName: { S: "Blue " },
+                                firstName: { S: "Adele" }
+                            }
+                        })
+                    }
+                });
 
                 await UsersService.updateUserPortfolio(userId, fieldsToUpdate);
                 expect(mockDynamoDB.update).toHaveBeenCalledWith(expectedUpdateParams);

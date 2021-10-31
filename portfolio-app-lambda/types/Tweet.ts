@@ -1,3 +1,6 @@
+/**
+ * Interface for Tweet
+ */
 export interface Tweet {
     /**
      * Numeric ID of the Tweet

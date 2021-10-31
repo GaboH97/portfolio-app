@@ -1,3 +1,6 @@
+/**
+ * User Portfolio interface
+ */
 export interface UserPortfolio {
     /**
      * Id of the User Portfolio entity

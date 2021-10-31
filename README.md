@@ -77,9 +77,10 @@ That is the API Gateway BaseURL endpoint
 
 # Endpoints 
 
-* GET <BaseURL>/users/1
-* PATCH <BaseURL>/users/1
-   
+* `GET <BaseURL>/users/{:id}`
+   * Example `GET https://73zpowl3wg.execute-api.us-east-1.amazonaws.com/api/users/1`
+* `PATCH <BaseURL>/users/{:id}`
+   * Example `PATCH https://73zpowl3wg.execute-api.us-east-1.amazonaws.com/api/users/1`
 
 ## Tecnologies Used
 

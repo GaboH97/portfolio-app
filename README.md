@@ -21,30 +21,30 @@ This application infrastucture has 100% AWS cloud-based deployment, which is con
 
 ## Set Up
 
-
 * Configure AWS Credentials
 `aws configure`
 * Install AWS CDK as a global module 
 `npm install -g aws-cdk`
 * Install TypeScript as a global module
 `npm install -g typescript`
-* Clone Git Repository
+* Clone Git Repository and move to project root directory
 `git clone https://github.com/GaboH97/portfolio-app.git && cd portfolio-app`
-* Install NPM dependencies (in project root folder and lambda)
-`npm i`
-* Bootstrap CDK
+* Bootstrap CDK (Only required for the first deployment)
 `cdk bootstrap aws://ACCOUNT-NUMBER/REGION`
-* Generate synthesized CloudFormation template
-`cdk synth`
-* Deploy CloudFormation stack to AWS Account/Region
-`cdk Deploy`
-
+* Run bash script with environment variables
+    * Unix/MacOS
+        ```
+        chmod +x cdk-deploy-to.sh
+        ./deploy_to.sh <ACCOUNT_ID> <REGION> <TWITTER_ACCESS_TOKEN_KEY> <TWITTER_ACCESS_TOKEN_SECRET> <TWITTER_CONSUMER_KEY> <TWITTER_CONSUMER_SECRET> <TWITTER_BEARER_TOKEN>
+        ```
+        
+    * Windows
+        `deploy_to <ACCOUNT_ID> <REGION> <TWITTER_ACCESS_TOKEN_KEY> <TWITTER_ACCESS_TOKEN_SECRET> <TWITTER_CONSUMER_KEY> <TWITTER_CONSUMER_SECRET> <TWITTER_BEARER_TOKEN>` 
 
 ## Tecnologies Used
 
 * NodeJS
 * Express
-* Handlebars
 * TypeScript
 * NPM
 * AWS
@@ -52,3 +52,8 @@ This application infrastucture has 100% AWS cloud-based deployment, which is con
 * AWS CDK
 * Docker
 * Git
+
+
+## Total Development Time
+
+4 days

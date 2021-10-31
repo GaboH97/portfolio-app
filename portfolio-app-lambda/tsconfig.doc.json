@@ -1,4 +1,11 @@
 {
-    "include": ["**/*.ts"],
-    "exclude": ["test.ts", "**/*.spec.ts", "app/file-to-exclude.ts"]
-  }
+  "include": [
+    "**/*.ts"
+  ],
+  "exclude": [
+    "test.ts",
+    "**/*.spec.ts",
+    "dist",
+    "__mocks__"
+  ]
+}

@@ -1,8 +1,7 @@
-import * as AWS from 'aws-sdk';
-AWS.config.update({ region: "us-east-1" })
 import { DocumentClient } from "aws-sdk/clients/dynamodb";
-import { EditableUserPortfolio, User, UserPortfolio } from "../types/userPortfolio";
-import { getLastTweetsByUser } from "./twitterAPIService";
+import UserNotFoundError from '../errors/userNotFoundError';
+import { EditableUserPortfolio, User, UserPortfolio } from "../types";
+import { getLastTweetsByUser } from "./twitterService";
 const db = new DocumentClient();
 
 /**
@@ -11,7 +10,7 @@ const db = new DocumentClient();
  * @param {Object} fieldsToUpdate fields to update
  * @returns A DynamoDB-specific update expression object
  */
-function generateUpdateExpression(fieldsToUpdate: Object) {
+export function generateUpdateExpression(fieldsToUpdate: Object) {
     let ExpressionAttributeNames: any = {}
     let ExpressionAttributeValues: any = {}
     let exp = {
@@ -34,13 +33,13 @@ function generateUpdateExpression(fieldsToUpdate: Object) {
 export async function getUserInfo(userId: string): Promise<User | null> {
     let user: User = {};
     const userPortfolio = await getUserPortfolioInfo(userId);
+    console.log(`userPortfolio`, userPortfolio);
     user.details = userPortfolio;
-    if (userPortfolio.userId) {
-        const userTweets = await getLastTweetsByUser(userPortfolio.userId);
-        user.tweets = userTweets;
-    }
+    const userTweets = await getLastTweetsByUser(userPortfolio.userId);
+    user.tweets = userTweets;
     return user;
 }
+
 
 /**
  * Gets the portfolio information of a user with a given `userId`
@@ -49,14 +48,13 @@ export async function getUserInfo(userId: string): Promise<User | null> {
  */
 export async function getUserPortfolioInfo(userId: string): Promise<UserPortfolio | null> {
     const results = await db.get({
-        // TableName: process.env.TABLE_NAME,
         TableName: "users",
         Key: {
             id: userId
         }
     }).promise();
     console.log(`results.Item`, results.Item);
-    if (!results.Item) return null;
+    if (!results.Item) throw new UserNotFoundError(userId);
     return results.Item as UserPortfolio;
 }
 
@@ -67,15 +65,16 @@ export async function getUserPortfolioInfo(userId: string): Promise<UserPortfoli
  * @returns 
  */
 export async function updateUserPortfolio(id: string, userPortfolio: EditableUserPortfolio) {
+
+    await getUserPortfolioInfo(id);
     const updateExpression = generateUpdateExpression(userPortfolio);
     const updateItemOutput = await db.update({
-        TableName: process.env.TABLE_NAME,
+        TableName: "users",
         Key: { id },
         UpdateExpression: updateExpression.UpdateExpression,
         ExpressionAttributeNames: updateExpression.ExpressionAttributeNames,
         ExpressionAttributeValues: updateExpression.ExpressionAttributeValues,
         ReturnValues: "ALL_NEW"
     }).promise();
-    console.log(`updateItemOutput.Attributes`, updateItemOutput.Attributes);
     return updateItemOutput.Attributes as UserPortfolio;
 }

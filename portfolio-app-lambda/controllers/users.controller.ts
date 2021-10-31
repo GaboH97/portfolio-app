@@ -28,29 +28,29 @@ export class UsersController extends Controller {
      */
     @Get('/:id')
     @SuccessResponse("200", "Ok")
-    @Example<User>({
-        details: {
-            id: "1",
-            firstName: "John",
-            lastName: "Doe",
-            description: "Super cool guy",
-            experienceSummary:"John is a super talented and handsome guy",
-            profilePhoto:"http://lorempixel.com/400/200/people",
-            title:"John Doe",
-            userId:"12345789",
-            username:"jdoe"
-        },
-        tweets: [
-            {
-                id: "123456789",
-                text: "My first Tweet"
-            },
-            {
-                id: "111222333",
-                text: "My second tweet"
-            }
-        ]
-    })
+    // @Example<User>({
+    //     details: {
+    //         id: "1",
+    //         firstName: "John",
+    //         lastName: "Doe",
+    //         description: "Super cool guy",
+    //         experienceSummary:"John is a super talented and handsome guy",
+    //         profilePhoto:"http://lorempixel.com/400/200/people",
+    //         title:"John Doe",
+    //         userId:"12345789",
+    //         username:"jdoe"
+    //     },
+    //     tweets: [
+    //         {
+    //             id: "123456789",
+    //             text: "My first Tweet"
+    //         },
+    //         {
+    //             id: "111222333",
+    //             text: "My second tweet"
+    //         }
+    //     ]
+    // })
     public async findById(
         @Path() id: number
     ): Promise<User> {

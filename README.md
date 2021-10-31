@@ -41,6 +41,11 @@ This application infrastucture has 100% AWS cloud-based deployment, which is con
     * Windows
         `deploy_to <ACCOUNT_ID> <REGION> <TWITTER_ACCESS_TOKEN_KEY> <TWITTER_ACCESS_TOKEN_SECRET> <TWITTER_CONSUMER_KEY> <TWITTER_CONSUMER_SECRET> <TWITTER_BEARER_TOKEN>` 
 
+# Endpoints 
+
+* GET <BaseURL>/users/1
+* PATCH <BaseURL>/users/1
+
 ## Tecnologies Used
 
 * NodeJS
@@ -52,6 +57,7 @@ This application infrastucture has 100% AWS cloud-based deployment, which is con
 * AWS CDK
 * Docker
 * Git
+
 
 
 ## Total Development Time

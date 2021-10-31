@@ -50,7 +50,7 @@ That is the API Gateway BaseURL endpoint
 **To see Swagger Doc**
 
    * Navigate to portfolio-app-lambda/dist folder
-   `cd porportfolio-app-lambda`
+   `cd portfolio-app-lambda/dist`
    * Run app file
    `node app.ts`
    * Run app file
@@ -58,10 +58,20 @@ That is the API Gateway BaseURL endpoint
    * Open Web Browser and go to docs endpoint `locahost:3000/docs`
 
 **To see Code Documentation**
-
+   * Navigate to portfolio-app-lambda folder
+   `cd portfolio-app-lambda/`
    * Run doc command
      `npm run doc`
    * Open Web Browser and go to code docs endpoint `locahost:8080/`
+
+
+**To run Unit Tests**
+   
+   * Remove `dist` folder in `portfolio-app-lambda`
+   * Navigate to portfolio-app-lambda folder
+   `cd portfolio-app-lambda/`
+   * Run test command 
+     `npm run test`
 
 # Endpoints 
 

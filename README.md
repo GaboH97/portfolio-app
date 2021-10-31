@@ -41,10 +41,33 @@ This application infrastucture has 100% AWS cloud-based deployment, which is con
     * Windows
         `deploy_to <ACCOUNT_ID> <REGION> <TWITTER_ACCESS_TOKEN_KEY> <TWITTER_ACCESS_TOKEN_SECRET> <TWITTER_CONSUMER_KEY> <TWITTER_CONSUMER_SECRET> <TWITTER_BEARER_TOKEN>` 
 
+When shell script is done it should print something like this:
+
+![image](https://user-images.githubusercontent.com/20173148/139599511-d92c636f-4dc6-437c-9558-a715d6ddc921.png)
+
+That is the API Gateway BaseURL endpoint
+
+**To see Swagger Doc**
+
+   * Navigate to portfolio-app-lambda/dist folder
+   `cd porportfolio-app-lambda`
+   * Run app file
+   `node app.ts`
+   * Run app file
+   `node app.js`
+   * Open Web Browser and go to docs endpoint `locahost:3000/docs`
+
+**To see Code Documentation**
+
+   * Run doc command
+     `npm run doc`
+   * Open Web Browser and go to code docs endpoint `locahost:8080/`
+
 # Endpoints 
 
 * GET <BaseURL>/users/1
 * PATCH <BaseURL>/users/1
+   
 
 ## Tecnologies Used
 

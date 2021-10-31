@@ -40,4 +40,4 @@ export interface UserPortfolio {
 /**
  * An updatable representation of a user portfolio
  */
-export type EditableUserPortfolio = Partial<Omit<UserPortfolio, "id" | "userId" | "username" >>;
+export type EditableUserPortfolio = Partial<Omit<UserPortfolio, "id" | "userId" | "username " >>;

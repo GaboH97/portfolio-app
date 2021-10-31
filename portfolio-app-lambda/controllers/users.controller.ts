@@ -11,7 +11,8 @@ import {
     Example
 } from "tsoa";
 import * as UsersService from '../services/usersService';
-import { EditableUserPortfolio, User } from "../types";
+import { User } from "../types/User";
+import { EditableUserPortfolio } from "../types/UserPortfolio";
 
 /**
  * Class to handle User related requests

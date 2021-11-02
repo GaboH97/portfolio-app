@@ -98,4 +98,4 @@ That is the API Gateway BaseURL endpoint
 
 ## Total Development Time
 
-4 days
+30 hours
